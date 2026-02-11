@@ -1,14 +1,14 @@
 # RSJ Actor Portfolio Website
 
-*A sleek, responsive portfolio website for professional actor Stevie Johnson.*
+*A sleek and responsive portfolio website for professional actor Stevie Johnson.*
 
 ## 🚀 Features
+
 - Modern Tailwind CSS design
 - Mobile-responsive layout
 - Smooth animations & transitions
 - Interactive contact section
 - SEO optimized
-
 
 ## Getting started
 
@@ -30,7 +30,6 @@ npm run dev
 
 After a few seconds, your project should be accessible at the address
 [http://localhost:5173/](http://localhost:5173/)
-
 
 If you are satisfied with the result, you can finally build the project for release with:
 
