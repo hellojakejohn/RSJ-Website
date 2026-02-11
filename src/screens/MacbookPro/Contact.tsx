@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
-import api from "../../services/api";
 import { 
   Mail, 
   Phone, 
@@ -123,30 +122,42 @@ export const Contact = () => {
     setSubmitStatus({type: null, message: ''});
 
     try {
-      // Simulate email sending - in production, this would call a backend API
-      // For now, we'll just show a success message after a delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // In production, you would send to stevie@steviejohnson.com via backend
-      console.log('Sending email to stevie@steviejohnson.com with data:', formData);
-      
-      setSubmitStatus({
-        type: 'success',
-        message: 'Thank you for your message! I\'ll get back to you within 24-48 hours.'
+      // Send to actual API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        inquiryType: 'general',
-        subject: '',
-        message: ''
-      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: 'success',
+          message: data.message || 'Thank you for your message! I\'ll get back to you within 24-48 hours.'
+        });
+
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          inquiryType: 'general',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.error || 'Sorry, there was an error sending your message. Please try again or contact me directly.'
+        });
+      }
     } catch (error) {
+      console.error('Contact form submission error:', error);
       setSubmitStatus({
         type: 'error',
-        message: 'Sorry, there was an error sending your message. Please try again or contact me directly.'
+        message: 'Sorry, there was an error sending your message. Please try again or contact me directly at stevie@steviejohnson.com'
       });
     } finally {
       setIsSubmitting(false);

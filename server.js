@@ -85,22 +85,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Add this to your server.js, right before app.listen()
-app.get('/api/blogs', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
-    res.json([
-      {
-        id: 1,
-        title: "The Art of Improvisation in Public Speaking",
-        excerpt: "How spontaneous techniques from theater can transform your communication skills.",
-        date: "May 15, 2023",
-        readTime: "5 min read",
-        category: "Public Speaking",
-        image: "/blog-improv.jpg"
-      },
-      // ... include all your other posts
-    ]);
-  });
 
 // Start server
 app.listen(PORT, () => {
