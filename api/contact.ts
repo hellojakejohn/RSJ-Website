@@ -1,8 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { Resend } from 'resend';
 
-// Email service configuration
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
-const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'stevie@steviejohnson.com';
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// Email configuration
+const RECIPIENT_EMAIL = process.env.RECIPIENT_EMAIL || 'steviejohnson101@gmail.com';
 const FROM_EMAIL = process.env.FROM_EMAIL || 'onboarding@resend.dev';
 
 // CORS headers
@@ -32,12 +35,26 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
+  // Set CORS headers for all responses
+  Object.entries(corsHeaders).forEach(([key, value]) => {
+    res.setHeader(key, value);
+  });
+
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).json({ ok: true });
   }
 
-  // Only accept POST requests
+  // Handle GET request (for testing)
+  if (req.method === 'GET') {
+    return res.status(200).json({
+      status: 'Contact form endpoint is working',
+      method: 'POST required to send email',
+      timestamp: new Date().toISOString()
+    });
+  }
+
+  // Only accept POST requests for sending email
   if (req.method !== 'POST') {
     return res.status(405).json({
       error: 'Method not allowed. Only POST requests are accepted.'
@@ -45,6 +62,14 @@ export default async function handler(
   }
 
   try {
+    // Log for debugging (remove in production)
+    console.log('Contact form submission received');
+    console.log('Environment check:', {
+      hasApiKey: !!process.env.RESEND_API_KEY,
+      recipientEmail: RECIPIENT_EMAIL,
+      fromEmail: FROM_EMAIL
+    });
+
     // Extract and validate form data
     const { name, email, inquiryType, subject, message } = req.body;
 
@@ -72,14 +97,18 @@ export default async function handler(
     };
 
     // Check if Resend API key is configured
-    if (!RESEND_API_KEY) {
+    if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY is not configured');
 
-      // Log the submission for debugging (remove in production)
-      console.log('Contact form submission:', sanitizedData);
-
+      // In development/debugging, return more info
       return res.status(500).json({
-        error: 'Email service is not configured. Please contact the administrator.'
+        error: 'Email service is not configured. RESEND_API_KEY environment variable is missing.',
+        debug: {
+          hasApiKey: false,
+          recipientEmail: RECIPIENT_EMAIL,
+          fromEmail: FROM_EMAIL,
+          timestamp: new Date().toISOString()
+        }
       });
     }
 
@@ -109,46 +138,54 @@ export default async function handler(
       </div>
     `;
 
-    // Send email using Resend API
-    const resendResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: RECIPIENT_EMAIL,
-        subject: `Contact Form: ${sanitizedData.subject}`,
-        html: emailHtml,
-        reply_to: sanitizedData.email,
-      }),
+    console.log('Attempting to send email via Resend...');
+
+    // Send email using Resend SDK
+    const { data, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: RECIPIENT_EMAIL,
+      subject: `Contact Form: ${sanitizedData.subject}`,
+      html: emailHtml,
+      reply_to: sanitizedData.email,
     });
 
-    if (!resendResponse.ok) {
-      const errorData = await resendResponse.json();
-      console.error('Resend API error:', errorData);
+    if (error) {
+      console.error('Resend API error:', error);
 
+      // Return detailed error in development
       return res.status(500).json({
-        error: 'Failed to send email. Please try again later or contact us directly.'
+        error: 'Failed to send email',
+        details: error,
+        debug: {
+          hasApiKey: !!process.env.RESEND_API_KEY,
+          recipientEmail: RECIPIENT_EMAIL,
+          fromEmail: FROM_EMAIL
+        }
       });
     }
 
-    const resendData = await resendResponse.json();
-    console.log('Email sent successfully:', resendData.id);
+    console.log('Email sent successfully:', data?.id);
 
     // Send success response
     return res.status(200).json({
       success: true,
       message: 'Thank you for your message! We\'ll get back to you within 24-48 hours.',
-      id: resendData.id,
+      id: data?.id,
     });
 
   } catch (error) {
     console.error('Contact form error:', error);
 
+    // Return detailed error for debugging
     return res.status(500).json({
-      error: 'An unexpected error occurred. Please try again later.'
+      error: 'An unexpected error occurred',
+      message: error instanceof Error ? error.message : 'Unknown error',
+      debug: {
+        hasApiKey: !!process.env.RESEND_API_KEY,
+        recipientEmail: RECIPIENT_EMAIL,
+        fromEmail: FROM_EMAIL,
+        timestamp: new Date().toISOString()
+      }
     });
   }
 }
