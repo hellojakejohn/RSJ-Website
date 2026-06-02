@@ -146,7 +146,7 @@ export default async function handler(
       to: RECIPIENT_EMAIL,
       subject: `Contact Form: ${sanitizedData.subject}`,
       html: emailHtml,
-      reply_to: sanitizedData.email,
+      replyTo: sanitizedData.email,
     });
 
     if (error) {
