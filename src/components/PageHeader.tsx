@@ -24,6 +24,24 @@ const StatBadge = ({ stat }: { stat: HeaderStat }) => (
   </div>
 );
 
+// Quieter version for the wide-screen margins: no box, a thin accent rule on
+// the side facing the title, and softened until hovered.
+const SideStat = ({ stat, side }: { stat: HeaderStat; side: "left" | "right" }) => (
+  <div
+    className={`flex items-center gap-3 py-1 opacity-70 hover:opacity-100 transition-opacity duration-300 ${
+      side === "left"
+        ? "flex-row-reverse text-right pr-4 border-r border-accent-400/30"
+        : "text-left pl-4 border-l border-accent-400/30"
+    }`}
+  >
+    <stat.icon className={`w-5 h-5 flex-shrink-0 ${stat.color ?? "text-accent-400"}`} />
+    <div className="min-w-0">
+      <div className="font-heading text-xl font-bold text-holographic leading-tight">{stat.value}</div>
+      <div className="text-white/60 text-xs leading-tight">{stat.label}</div>
+    </div>
+  </div>
+);
+
 // Page title with its stat badges: split left/right of the title on wide
 // screens (xl), one compact row under it below that.
 export const PageHeader = ({ title, subtitle, note, stats = [] }: PageHeaderProps) => {
@@ -33,10 +51,10 @@ export const PageHeader = ({ title, subtitle, note, stats = [] }: PageHeaderProp
 
   return (
     <section className="pt-4 pb-6 xl:pt-6 xl:pb-8">
-      <div className="xl:grid xl:grid-cols-[1fr_auto_1fr] xl:items-center xl:gap-4">
+      <div className="xl:grid xl:grid-cols-[1fr_auto_1fr] xl:items-center xl:gap-10">
         {left.length > 0 && (
-          <div className="hidden xl:flex flex-col gap-3 w-36 justify-self-end">
-            {left.map((s) => <StatBadge key={s.label} stat={s} />)}
+          <div className="hidden xl:flex flex-col gap-4 justify-self-start">
+            {left.map((s) => <SideStat key={s.label} stat={s} side="left" />)}
           </div>
         )}
 
@@ -51,8 +69,8 @@ export const PageHeader = ({ title, subtitle, note, stats = [] }: PageHeaderProp
         </div>
 
         {right.length > 0 && (
-          <div className="hidden xl:flex flex-col gap-3 w-36 justify-self-start">
-            {right.map((s) => <StatBadge key={s.label} stat={s} />)}
+          <div className="hidden xl:flex flex-col gap-4 justify-self-end">
+            {right.map((s) => <SideStat key={s.label} stat={s} side="right" />)}
           </div>
         )}
       </div>
