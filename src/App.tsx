@@ -1,15 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import { CinematicHome } from "./screens/MacbookPro/CinematicHome";
-import { ModernHome } from "./screens/MacbookPro/ModernHome";
 import { ModernActor } from "./screens/MacbookPro/ModernActor";
 import { ModernAuthor } from "./screens/MacbookPro/ModernAuthor";
-import { MacbookPro } from "./screens/MacbookPro/MacbookPro";
-import { Actor } from "./screens/MacbookPro/Actor";
-import { Author } from "./screens/MacbookPro/Author";
 import { Professor } from "./screens/MacbookPro/Professor";
 import { Courses } from "./screens/MacbookPro/Courses";
 import { Contact } from "./screens/MacbookPro/Contact";
-import { AdminDashboard } from "./screens/MacbookPro/AdminDashboard";
+import { NotFound } from "./screens/MacbookPro/NotFound";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
 export default function App() {
@@ -22,13 +18,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/professor" element={<Professor />} />
         <Route path="/courses" element={<Courses />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        
-        {/* Previous versions for comparison */}
-        <Route path="/modern-home" element={<ModernHome />} />
-        <Route path="/old-home" element={<MacbookPro />} />
-        <Route path="/old-actor" element={<Actor />} />
-        <Route path="/old-author" element={<Author />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </ErrorBoundary>
   );

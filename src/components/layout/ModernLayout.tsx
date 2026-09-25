@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
-import { Card } from "../ui/card";
-import { 
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "../ui/navigation-menu";
 import { Menu, X } from "lucide-react";
 
 interface ModernLayoutProps {
@@ -51,43 +45,34 @@ export const ModernLayout = ({
       }`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo/Brand */}
-          <div className="flex items-center space-x-3">
-            <Button 
-              className="w-12 h-12 rounded-2xl bg-gradient-to-r from-primary-500 to-accent-500 p-0 hover:scale-110 transition-transform duration-300 neon-glow"
-              aria-label="Menu"
-            >
-              <span className="text-white font-display text-xl font-bold">SJ</span>
-            </Button>
-          </div>
+          <a
+            href="/"
+            className="w-12 h-12 rounded-2xl bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center neon-glow"
+            aria-label="Stevie Johnson home"
+          >
+            <span className="text-white font-display text-xl font-bold">SJ</span>
+          </a>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden lg:flex">
-            <NavigationMenuList className="glass rounded-full px-6 py-2 space-x-1">
+          <nav className="hidden lg:flex" aria-label="Main">
+            <ul className="glass rounded-full px-6 py-2 flex items-center gap-8">
               {navItems.map((item) => (
-                <NavigationMenuItem key={item}>
-                  <Button 
-                    variant="ghost" 
-                    asChild
-                    className={`
-                      relative px-6 py-2 rounded-full font-heading text-sm font-medium
-                      transition-all duration-300 hover-glow
-                      ${item === activeNavItem 
-                        ? 'text-accent-400 bg-primary-500/20' 
+                <li key={item}>
+                  <a
+                    href={`/${item === "home" ? "" : item}`}
+                    aria-current={item === activeNavItem ? "page" : undefined}
+                    className={`block px-6 py-2 rounded-full font-heading text-sm font-medium transition-colors duration-200 ${
+                      item === activeNavItem
+                        ? 'text-accent-400 bg-primary-500/20'
                         : 'text-white/80 hover:text-white hover:bg-white/10'
-                      }
-                    `}
+                    }`}
                   >
-                    <a href={`/${item === "home" ? "" : item}`}>
-                      {item.charAt(0).toUpperCase() + item.slice(1)}
-                      {item === activeNavItem && (
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500/20 to-accent-500/20 animate-pulse" />
-                      )}
-                    </a>
-                  </Button>
-                </NavigationMenuItem>
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </a>
+                </li>
               ))}
-            </NavigationMenuList>
-          </NavigationMenu>
+            </ul>
+          </nav>
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-3">
@@ -116,7 +101,7 @@ export const ModernLayout = ({
                   key={item}
                   href={`/${item === "home" ? "" : item}`}
                   className={`
-                    block px-4 py-3 rounded-xl font-heading font-medium transition-all duration-300
+                    block px-4 py-3 rounded-xl font-heading font-medium transition-colors duration-200
                     ${item === activeNavItem 
                       ? 'text-accent-400 bg-primary-500/20' 
                       : 'text-white/80 hover:text-white hover:bg-white/10'
@@ -143,7 +128,7 @@ export const ModernLayout = ({
       <footer className="relative bg-black/80 backdrop-blur-sm border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-8">
           <p className="text-center text-white/50 text-sm">
-            © 2025 Stevie Johnson • All Rights Reserved
+            © {new Date().getFullYear()} Stevie Johnson • All Rights Reserved
           </p>
         </div>
       </footer>

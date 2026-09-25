@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
-import { Play, Award, Calendar, MapPin, ExternalLink, Download, Instagram, Youtube, Film, ChevronRight, Building2, Users, Megaphone } from "lucide-react";
+import { YouTubeEmbed } from "../../components/YouTubeEmbed";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { PageHeader } from "../../components/PageHeader";
+import { Play, Award, MapPin, Mail, ExternalLink, Instagram, Youtube, Film, Building2, Users, Megaphone } from "lucide-react";
 import { SiTiktok, SiImdb } from "react-icons/si";
 
 export const ModernActor = () => {
+  usePageMeta({
+    title: "Actor",
+    description: "Stevie Johnson, SAG-AFTRA actor with 30+ years on stage and screen. Theatrical reel, recent credits, and representation.",
+    image: "/stevie_headshot_207.jpg",
+  });
   const [activeReel, setActiveReel] = useState(0);
 
   const reels = [
@@ -14,48 +22,50 @@ export const ModernActor = () => {
     { id: "enrZJWfOL6s", title: "Blueberry", description: "Short film" }
   ];
 
-  const allCredits = [
-    {
-      title: "Untitled Project",
-      role: "TBA",
-      type: "Feature Film",
-      year: "2025",
-      status: "upcoming",
-      color: "from-accent-400 to-accent-500"
-    },
-    {
-      title: "Buffalo Daze",
-      role: "Joseph Blackburn Bass",
-      type: "Feature Film",
-      year: "2023",
-      status: "recent",
-      color: "from-amber-500 to-orange-500"
-    },
-    {
-      title: "Triple O.G.",
-      role: "Robert",
-      type: "Short Film", 
-      year: "2022",
-      status: "recent",
-      color: "from-purple-500 to-indigo-500"
-    },
-    {
-      title: "Animal Kingdom",
-      role: "Detective",
-      type: "Television",
-      year: "2021",
-      status: "recent",
-      color: "from-blue-500 to-cyan-500"
-    },
-    {
-      title: "Blueberry",
-      role: "Director/Producer",
-      type: "Short Film",
-      year: "2023",
-      status: "recent",
-      color: "from-green-500 to-teal-500"
-    }
+  // Acting credits from IMDb (nm0426281). Words! links to the name page
+  // because its title ID couldn't be verified.
+  const credits = [
+    { title: "House Hunters (HGTV)", role: "Himself", type: "TV Series", year: "2026", url: "https://www.imdb.com/title/tt0369117/" },
+    { title: "Buffalo Daze", role: "Joseph Blackburn Bass", type: "Feature Film", year: "2025", url: "https://www.imdb.com/title/tt27137484/" },
+    { title: "Black Silk", role: "Otis", type: "Short Film", year: "2024", url: "https://www.imdb.com/title/tt15731868/" },
+    { title: "Words!", role: "Raymond Jones", type: "Short Film", year: "2022", url: "https://www.imdb.com/name/nm0426281/" },
+    { title: "Animal Kingdom", role: "Bob", type: "TV Series", year: "2021", url: "https://www.imdb.com/title/tt5574490/" },
+    { title: "A Piece of Cake", role: "Dad #2", type: "Short Film", year: "2020", url: "https://www.imdb.com/title/tt10525124/" },
+    { title: "Triple O.G.", role: "Silk", type: "Short Film", year: "2018", url: "https://www.imdb.com/title/tt15731714/" },
+    { title: "Deadly Runway", role: "Principal Wilson", type: "TV Movie", year: "2018", url: "https://www.imdb.com/title/tt7922834/" },
+    { title: "Blueberry", role: "Lyric Hayes", type: "Video", year: "2018", url: "https://www.imdb.com/title/tt8651952/" },
+    { title: "This Is How I Want to Remember H.E.R.", role: "Geoff", type: "Short Film", year: "2018", url: "https://www.imdb.com/title/tt4447358/" },
+    { title: "Manipura", role: "Terrance", type: "Short Film", year: "2015", url: "https://www.imdb.com/title/tt3905798/" },
+    { title: "Swadhisthana", role: "Terrance Ferguson", type: "Short Film", year: "2014", url: "https://www.imdb.com/title/tt3507678/" },
+    { title: "The Eric Andre Show", role: "", type: "TV Series", year: "2012", url: "https://www.imdb.com/title/tt2244495/" },
+    { title: "Out the Gate", role: "Skootah", type: "Feature Film", year: "2011", url: "https://www.imdb.com/title/tt1792122/" },
+    { title: "The Real Deal", role: "Curtis Murray", type: "Video", year: "2009", url: "https://www.imdb.com/title/tt1477860/" },
+    { title: "How to Be a Loan Shark", role: "Harvey", type: "Short Film", year: "2008", url: "https://www.imdb.com/title/tt1396478/" },
+    { title: "Pants on Fire", role: "Ralph", type: "Feature Film", year: "2008", url: "https://www.imdb.com/title/tt1049407/" },
+    { title: "Cold Case", role: "Newark Resident", type: "TV Series", year: "2008", url: "https://www.imdb.com/title/tt0368479/" },
+    { title: "Urban Genesis", role: "Shareef", type: "Short Film", year: "2008", url: "https://www.imdb.com/title/tt1176139/" },
+    { title: "The Shield", role: "Hewell", type: "TV Series", year: "2006", url: "https://www.imdb.com/title/tt0286486/" },
+    { title: "CSI: Miami", role: "Radiation Man #2", type: "TV Series", year: "2003", url: "https://www.imdb.com/title/tt0313043/" },
+    { title: "Con Express", role: "Jensen", type: "Video", year: "2002", url: "https://www.imdb.com/title/tt0310907/" },
+    { title: "For da Love of Money", role: "Detective Lewis", type: "Feature Film", year: "2002", url: "https://www.imdb.com/title/tt0317521/" },
+    { title: "The Tomorrow Man", role: "Griffin", type: "Video", year: "2002", url: "https://www.imdb.com/title/tt0153098/" },
+    { title: "The Beast", role: "Security Guard", type: "TV Series", year: "2001", url: "https://www.imdb.com/title/tt0268175/" },
+    { title: "JAG", role: "Robert Johnson", type: "TV Series", year: "2001", url: "https://www.imdb.com/title/tt0112022/" },
+    { title: "Titans", role: "Male Nurse", type: "TV Series", year: "2000", url: "https://www.imdb.com/title/tt0243732/" },
+    { title: "The X-Files", role: "EMT", type: "TV Series", year: "2000", url: "https://www.imdb.com/title/tt0106179/" },
+    { title: "Desert Thunder", role: "Johnny Jones", type: "Feature Film", year: "1999", url: "https://www.imdb.com/title/tt0164016/" },
+    { title: "Kinfolks", role: "James", type: "Feature Film", year: "1998", url: "https://www.imdb.com/title/tt0270457/" },
+    { title: "The Young and the Restless", role: "Police Officer / Detective", type: "TV Series", year: "1997", url: "https://www.imdb.com/title/tt0069658/" },
+    { title: "Beverly Hills, 90210", role: "Jailer / Booking Agent", type: "TV Series", year: "1996", url: "https://www.imdb.com/title/tt0098749/" },
   ];
+
+  const typeColors: Record<string, string> = {
+    "Feature Film": "from-amber-500 to-orange-500",
+    "Short Film": "from-purple-500 to-indigo-500",
+    "TV Series": "from-blue-500 to-cyan-500",
+    "TV Movie": "from-accent-400 to-accent-500",
+    "Video": "from-green-500 to-teal-500",
+  };
 
   const representation = {
     agent: "True Artists Agency",
@@ -66,38 +76,15 @@ export const ModernActor = () => {
 
   return (
     <ModernLayout activeNavItem="actor">
-      {/* COMPACT HEADER SECTION */}
-      <section className="py-12">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-4xl md:text-6xl font-black leading-none tracking-tight mb-4">
-            <span className="text-holographic">ACTOR • STEVIE JOHNSON</span>
-          </h1>
-          <p className="text-lg text-white/80 font-body max-w-2xl mx-auto">
-            30+ years bringing stories to life • SAG-AFTRA Member
-          </p>
-        </div>
-
-        {/* COMPACT STATS ROW */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {[
-            { value: "30+", label: "Years", icon: Award },
-            { value: "100+", label: "Credits", icon: Play },
-            { value: "15", label: "Awards", icon: Award },
-            { value: "SAG", label: "Union", icon: Film }
-          ].map((stat) => (
-            <div 
-              key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
-            >
-              <stat.icon className="w-5 h-5 text-accent-400" />
-              <div className="text-center">
-                <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <PageHeader
+        title="ACTOR • STEVIE JOHNSON"
+        subtitle={"30+ years bringing stories to life • SAG-AFTRA Member"}
+        stats={[
+          { value: "30+", label: "Years", icon: Award },
+          { value: "100+", label: "Credits", icon: Play },
+          { value: "SAG", label: "Union", icon: Film },
+        ]}
+      />
 
       {/* MAIN TWO-COLUMN LAYOUT */}
       <section className="pb-16">
@@ -114,14 +101,7 @@ export const ModernActor = () => {
               </div>
               
               <div className="aspect-video rounded-xl overflow-hidden screen-glow mb-4">
-                <iframe
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${reels[activeReel].id}`}
-                  title={reels[activeReel].title}
-                  frameBorder="0"
-                  allowFullScreen
-                  loading="lazy"
-                />
+                <YouTubeEmbed id={reels[activeReel].id} title={reels[activeReel].title} />
               </div>
 
               {/* Reel Navigation */}
@@ -143,31 +123,31 @@ export const ModernActor = () => {
             </Card>
 
             {/* CONTACT BUTTONS */}
-            <div className="flex gap-4">
-              <Button className="flex-1 h-12 px-6 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold hover:scale-105 transition-all duration-300" asChild>
-                <a href="mailto:stevie@steviejohnson.com?subject=Acting%20Inquiry">
-                  <Download className="w-4 h-4 mr-2" />
+            <div className="flex flex-wrap gap-4">
+              <Button className="flex-1 min-w-[200px] h-12 px-6 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold hover:scale-105 transition-all duration-300" asChild>
+                <a href="mailto:steviejohnson101@gmail.com?subject=Acting%20Inquiry">
+                  <Mail className="w-4 h-4 mr-2" />
                   Contact Booking
                 </a>
               </Button>
               <div className="flex gap-2">
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-600 to-primary-700 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.instagram.com/holisticactor" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.instagram.com/holisticactor" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                     <Instagram className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.youtube.com/@steviesumj" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.youtube.com/@steviesumj" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                     <Youtube className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-400 to-accent-500 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.imdb.com/name/nm0426281/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.imdb.com/name/nm0426281/" target="_blank" rel="noopener noreferrer" aria-label="IMDb">
                     <SiImdb className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-500 to-accent-400 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.tiktok.com/@holisticactor" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.tiktok.com/@holisticactor" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                     <SiTiktok className="w-5 h-5 text-white" />
                   </a>
                 </Button>
@@ -177,85 +157,45 @@ export const ModernActor = () => {
 
           {/* RIGHT COLUMN - CREDITS */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-heading text-2xl font-bold text-holographic">Credits & Projects</h2>
-              <div className="flex gap-2 text-sm">
-                <span className="px-3 py-1 rounded-full bg-accent-500/20 text-accent-400">Upcoming</span>
-                <span className="px-3 py-1 rounded-full bg-primary-500/20 text-primary-400">Recent</span>
-              </div>
-            </div>
+            <h2 className="font-heading text-2xl font-bold text-holographic">Credits & Projects</h2>
 
             {/* COMPACT CREDIT CARDS */}
-            <div className="space-y-3 max-h-[600px] overflow-y-auto custom-scrollbar">
-              {/* UPCOMING SECTION */}
-              {allCredits.filter(c => c.status === 'upcoming').length > 0 && (
-                <div className="mb-4">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="h-px flex-1 bg-accent-400/30"></div>
-                    <span className="text-accent-400 font-heading font-semibold text-sm uppercase tracking-wider">Upcoming Projects</span>
-                    <div className="h-px flex-1 bg-accent-400/30"></div>
-                  </div>
-                  {allCredits.filter(c => c.status === 'upcoming').map((credit, index) => (
-                    <Card 
-                      key={`${credit.title}-${index}`}
-                      className="glass rounded-xl p-4 hover-lift group cursor-pointer transition-all duration-300 border border-accent-400/30 bg-accent-400/5"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="font-heading text-lg font-bold text-white group-hover:text-accent-400 transition-colors">
-                              {credit.title}
-                            </h3>
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${credit.color} text-white`}>
-                              {credit.type}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="text-accent-400 font-medium">{credit.role}</span>
-                            <span className="text-white/50">{credit.year}</span>
-                          </div>
+            <div className="max-h-[600px] overflow-y-auto custom-scrollbar pr-1">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-px flex-1 bg-primary-400/30"></div>
+                <span className="text-primary-400 font-heading font-semibold text-sm uppercase tracking-wider">Film &amp; Television</span>
+                <div className="h-px flex-1 bg-primary-400/30"></div>
+              </div>
+              {credits.map((credit) => (
+                <a
+                  key={credit.title}
+                  href={credit.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mb-3"
+                  aria-label={`${credit.title} on IMDb (opens in a new tab)`}
+                >
+                  <Card className="glass rounded-xl px-4 py-3 hover-lift group transition-all duration-300">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-1">
+                          <h3 className="font-heading text-base lg:text-lg font-bold text-white group-hover:text-primary-400 transition-colors">
+                            {credit.title}
+                          </h3>
+                          <span className={`px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${typeColors[credit.type]} text-white`}>
+                            {credit.type}
+                          </span>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-accent-400/50 group-hover:text-accent-400 group-hover:translate-x-1 transition-all" />
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-              )}
-              
-              {/* RECENT SECTION */}
-              {allCredits.filter(c => c.status === 'recent').length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="h-px flex-1 bg-primary-400/30"></div>
-                    <span className="text-primary-400 font-heading font-semibold text-sm uppercase tracking-wider">Recent Credits</span>
-                    <div className="h-px flex-1 bg-primary-400/30"></div>
-                  </div>
-                  {allCredits.filter(c => c.status === 'recent').map((credit, index) => (
-                    <Card 
-                      key={`${credit.title}-${index}`}
-                      className="glass rounded-xl p-4 mb-3 hover-lift group cursor-pointer transition-all duration-300"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-1">
-                            <h3 className="font-heading text-lg font-bold text-white group-hover:text-primary-400 transition-colors">
-                              {credit.title}
-                            </h3>
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r ${credit.color} text-white`}>
-                              {credit.type}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="text-primary-400 font-medium">{credit.role}</span>
-                            <span className="text-white/50">{credit.year}</span>
-                          </div>
+                        <div className="flex items-center gap-4 text-sm">
+                          {credit.role && <span className="text-primary-400 font-medium">{credit.role}</span>}
+                          <span className="text-white/50">{credit.year}</span>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
                       </div>
-                    </Card>
-                  ))}
-                </div>
-              )}
+                      <ExternalLink className="w-4 h-4 flex-shrink-0 text-white/30 group-hover:text-primary-400 transition-colors" />
+                    </div>
+                  </Card>
+                </a>
+              ))}
             </div>
           </div>
         </div>
