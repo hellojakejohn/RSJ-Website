@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
-import { ExternalLink, Star, Calendar, BookOpen, ShoppingCart, Award, Download, ChevronRight, Mail, Globe } from "lucide-react";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { Calendar, BookOpen, ShoppingCart, Award, Mail } from "lucide-react";
 
 export const ModernAuthor = () => {
+  usePageMeta({
+    title: "Author",
+    description: "Books by Stevie Johnson: How To Survive Speech 101, a public speaking workbook, and Convertible Chocolate, a memoir.",
+    image: "/stevie_headshot_287.jpg",
+  });
   const [selectedBook, setSelectedBook] = useState<number | null>(null);
   
   const books = [
@@ -17,7 +23,6 @@ export const ModernAuthor = () => {
       amazonUrl: "https://www.amazon.com/How-Survive-Speech-101-Workbook/dp/1500874523",
       publishDate: "August 2014",
       pages: 192,
-      rating: "4.7/5",
       genre: "Education",
       color: "from-primary-500 to-primary-600"
     },
@@ -30,7 +35,6 @@ export const ModernAuthor = () => {
       amazonUrl: "https://www.amazon.com/Convertible-Chocolate-R-Steven-Johnson/dp/0989372502",
       publishDate: "June 2013",
       pages: 218,
-      rating: "4.5/5",
       genre: "Memoir",
       color: "from-accent-500 to-accent-600"
     }
@@ -56,9 +60,7 @@ export const ModernAuthor = () => {
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           {[
             { value: "2", label: "Books", icon: BookOpen },
-            { value: "2+", label: "Genres", icon: Award },
-            { value: "4.6★", label: "Rating", icon: Star },
-            { value: "10K+", label: "Readers", icon: Globe }
+            { value: "2", label: "Genres", icon: Award },
           ].map((stat) => (
             <div 
               key={stat.label}
@@ -81,7 +83,6 @@ export const ModernAuthor = () => {
             <h2 className="font-display text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400 mb-4">
               PUBLISHED WORKS
             </h2>
-            <span className="px-4 py-2 rounded-full bg-primary-500/20 text-primary-400 font-heading text-sm">Available Now</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
@@ -127,10 +128,6 @@ export const ModernAuthor = () => {
                             <BookOpen className="w-3 h-3" />
                             {book.pages} pages
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Star className="w-3 h-3 fill-current" />
-                            {book.rating}
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -139,14 +136,10 @@ export const ModernAuthor = () => {
 
                 {/* Book Info */}
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-center">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${book.color} text-white`}>
                       {book.genre}
                     </span>
-                    <div className="flex items-center gap-1 text-accent-400">
-                      <Star className="w-4 h-4 fill-current" />
-                      <span className="text-sm font-medium">{book.rating}</span>
-                    </div>
                   </div>
 
                   <h3 className="font-heading text-xl font-bold text-white group-hover:text-accent-400 transition-colors duration-300 text-center">
@@ -174,7 +167,7 @@ export const ModernAuthor = () => {
                         asChild
                       >
                         <a href={book.amazonUrl} target="_blank" rel="noopener noreferrer">
-                          <ShoppingCart className="w-3 h-3 mr-1 group-hover:animate-pulse" />
+                          <ShoppingCart className="w-3 h-3 mr-1" />
                           Buy
                         </a>
                       </Button>
@@ -192,7 +185,7 @@ export const ModernAuthor = () => {
 
       {/* ABOUT THE AUTHOR SECTION - PROMINENT BOTTOM */}
       <section className="py-20">
-        <Card className="glass rounded-3xl p-12 hover-lift">
+        <Card className="glass rounded-3xl p-12">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400 mb-4">
@@ -221,22 +214,14 @@ export const ModernAuthor = () => {
                   for overcoming public speaking challenges.
                 </p>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                <div className="grid grid-cols-2 gap-6 mt-8">
                   <div className="text-center glass rounded-2xl p-4">
                     <div className="font-heading text-3xl font-bold text-accent-400">2</div>
                     <div className="text-white/60 text-sm">Books Published</div>
                   </div>
                   <div className="text-center glass rounded-2xl p-4">
-                    <div className="font-heading text-3xl font-bold text-primary-400">4.6</div>
-                    <div className="text-white/60 text-sm">Average Rating</div>
-                  </div>
-                  <div className="text-center glass rounded-2xl p-4">
                     <div className="font-heading text-3xl font-bold text-accent-400">30+</div>
                     <div className="text-white/60 text-sm">Years Experience</div>
-                  </div>
-                  <div className="text-center glass rounded-2xl p-4">
-                    <div className="font-heading text-3xl font-bold text-primary-400">10K+</div>
-                    <div className="text-white/60 text-sm">Readers Reached</div>
                   </div>
                 </div>
               </div>
@@ -245,14 +230,14 @@ export const ModernAuthor = () => {
                 <div className="relative">
                   <div className="w-80 h-80 rounded-2xl overflow-hidden neon-glow">
                     <img
-                      src="/stevie_headshot_287.jpg"
+                      src="/stevie_headshot_287.webp"
                       alt="Stevie Johnson"
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
                     <Button className="px-8 py-3 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold hover:scale-105 transition-all duration-300" asChild>
-                      <a href="mailto:stevie@steviejohnson.com?subject=Literary%20Inquiry">
+                      <a href="mailto:steviejohnson101@gmail.com?subject=Literary%20Inquiry">
                         <Mail className="w-4 h-4 mr-2" />
                         Contact Author
                       </a>

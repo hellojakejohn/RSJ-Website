@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
-import { Play, Award, Calendar, MapPin, ExternalLink, Download, Instagram, Youtube, Film, ChevronRight, Building2, Users, Megaphone } from "lucide-react";
+import { YouTubeEmbed } from "../../components/YouTubeEmbed";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { Play, Award, MapPin, Mail, Instagram, Youtube, Film, Building2, Users, Megaphone } from "lucide-react";
 import { SiTiktok, SiImdb } from "react-icons/si";
 
 export const ModernActor = () => {
+  usePageMeta({
+    title: "Actor",
+    description: "Stevie Johnson, SAG-AFTRA actor with 30+ years on stage and screen. Theatrical reel, recent credits, and representation.",
+    image: "/stevie_headshot_207.jpg",
+  });
   const [activeReel, setActiveReel] = useState(0);
 
   const reels = [
@@ -22,6 +29,14 @@ export const ModernActor = () => {
       year: "2025",
       status: "upcoming",
       color: "from-accent-400 to-accent-500"
+    },
+    {
+      title: "House Hunters (HGTV)",
+      role: "",
+      type: "Television",
+      year: "",
+      status: "recent",
+      color: "from-blue-500 to-cyan-500"
     },
     {
       title: "Buffalo Daze",
@@ -82,7 +97,6 @@ export const ModernActor = () => {
           {[
             { value: "30+", label: "Years", icon: Award },
             { value: "100+", label: "Credits", icon: Play },
-            { value: "15", label: "Awards", icon: Award },
             { value: "SAG", label: "Union", icon: Film }
           ].map((stat) => (
             <div 
@@ -114,14 +128,7 @@ export const ModernActor = () => {
               </div>
               
               <div className="aspect-video rounded-xl overflow-hidden screen-glow mb-4">
-                <iframe
-                  className="w-full h-full"
-                  src={`https://www.youtube.com/embed/${reels[activeReel].id}`}
-                  title={reels[activeReel].title}
-                  frameBorder="0"
-                  allowFullScreen
-                  loading="lazy"
-                />
+                <YouTubeEmbed id={reels[activeReel].id} title={reels[activeReel].title} />
               </div>
 
               {/* Reel Navigation */}
@@ -145,29 +152,29 @@ export const ModernActor = () => {
             {/* CONTACT BUTTONS */}
             <div className="flex gap-4">
               <Button className="flex-1 h-12 px-6 rounded-xl bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold hover:scale-105 transition-all duration-300" asChild>
-                <a href="mailto:stevie@steviejohnson.com?subject=Acting%20Inquiry">
-                  <Download className="w-4 h-4 mr-2" />
+                <a href="mailto:steviejohnson101@gmail.com?subject=Acting%20Inquiry">
+                  <Mail className="w-4 h-4 mr-2" />
                   Contact Booking
                 </a>
               </Button>
               <div className="flex gap-2">
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-600 to-primary-700 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.instagram.com/holisticactor" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.instagram.com/holisticactor" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                     <Instagram className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-accent-500 to-accent-600 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.youtube.com/@steviesumj" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.youtube.com/@steviesumj" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
                     <Youtube className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-400 to-accent-500 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.imdb.com/name/nm0426281/" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.imdb.com/name/nm0426281/" target="_blank" rel="noopener noreferrer" aria-label="IMDb">
                     <SiImdb className="w-5 h-5 text-white" />
                   </a>
                 </Button>
                 <Button className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary-500 to-accent-400 p-0 hover:scale-110 transition-transform duration-300" asChild>
-                  <a href="https://www.tiktok.com/@holisticactor" target="_blank" rel="noopener noreferrer">
+                  <a href="https://www.tiktok.com/@holisticactor" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
                     <SiTiktok className="w-5 h-5 text-white" />
                   </a>
                 </Button>
@@ -177,12 +184,8 @@ export const ModernActor = () => {
 
           {/* RIGHT COLUMN - CREDITS */}
           <div className="space-y-4">
-            <div className="flex items-center justify-between mb-4">
+            <div className="mb-4">
               <h2 className="font-heading text-2xl font-bold text-holographic">Credits & Projects</h2>
-              <div className="flex gap-2 text-sm">
-                <span className="px-3 py-1 rounded-full bg-accent-500/20 text-accent-400">Upcoming</span>
-                <span className="px-3 py-1 rounded-full bg-primary-500/20 text-primary-400">Recent</span>
-              </div>
             </div>
 
             {/* COMPACT CREDIT CARDS */}
@@ -198,7 +201,7 @@ export const ModernActor = () => {
                   {allCredits.filter(c => c.status === 'upcoming').map((credit, index) => (
                     <Card 
                       key={`${credit.title}-${index}`}
-                      className="glass rounded-xl p-4 hover-lift group cursor-pointer transition-all duration-300 border border-accent-400/30 bg-accent-400/5"
+                      className="glass rounded-xl p-4 hover-lift group transition-all duration-300 border border-accent-400/30 bg-accent-400/5"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
@@ -215,7 +218,6 @@ export const ModernActor = () => {
                             <span className="text-white/50">{credit.year}</span>
                           </div>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-accent-400/50 group-hover:text-accent-400 group-hover:translate-x-1 transition-all" />
                       </div>
                     </Card>
                   ))}
@@ -233,7 +235,7 @@ export const ModernActor = () => {
                   {allCredits.filter(c => c.status === 'recent').map((credit, index) => (
                     <Card 
                       key={`${credit.title}-${index}`}
-                      className="glass rounded-xl p-4 mb-3 hover-lift group cursor-pointer transition-all duration-300"
+                      className="glass rounded-xl p-4 mb-3 hover-lift group transition-all duration-300"
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex-1">
@@ -245,12 +247,13 @@ export const ModernActor = () => {
                               {credit.type}
                             </span>
                           </div>
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="text-primary-400 font-medium">{credit.role}</span>
-                            <span className="text-white/50">{credit.year}</span>
-                          </div>
+                          {(credit.role || credit.year) && (
+                            <div className="flex items-center gap-4 text-sm">
+                              {credit.role && <span className="text-primary-400 font-medium">{credit.role}</span>}
+                              {credit.year && <span className="text-white/50">{credit.year}</span>}
+                            </div>
+                          )}
                         </div>
-                        <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
                       </div>
                     </Card>
                   ))}

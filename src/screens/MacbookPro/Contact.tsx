@@ -2,31 +2,30 @@ import React, { useRef, useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
+import { usePageMeta } from "../../lib/usePageMeta";
 import { 
   Mail, 
   Phone, 
   MapPin, 
   MessageCircle, 
   Send, 
-  Star, 
-  Users, 
   Instagram, 
   Youtube, 
-  Facebook,
   Globe,
-  Clock,
   CheckCircle,
   Building,
   BookOpen,
   Film,
   GraduationCap,
-  Calendar,
-  ExternalLink,
-  ChevronRight
+  ExternalLink
 } from "lucide-react";
 import { SiTiktok, SiImdb } from "react-icons/si";
 
 export const Contact = () => {
+  usePageMeta({
+    title: "Contact",
+    description: "Get in touch with Stevie Johnson for acting, writing, teaching, and speaking inquiries.",
+  });
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -74,17 +73,17 @@ export const Contact = () => {
     {
       icon: Mail,
       title: "Primary Email",
-      value: "stevie@steviejohnson.com",
+      value: "steviejohnson101@gmail.com",
+      href: "mailto:steviejohnson101@gmail.com",
       description: "Best for: General inquiries, collaborations",
-      response: "24-48 hours",
       color: "primary"
     },
     {
       icon: Phone,
       title: "Direct Phone",
       value: "(213) 944-6059",
+      href: "tel:+12139446059",
       description: "Best for: Urgent bookings, immediate needs",
-      response: "Same day",
       color: "accent"
     },
     {
@@ -92,7 +91,6 @@ export const Contact = () => {
       title: "Professional Representation",
       value: "BiCoastal Talent Agency",
       description: "Best for: Acting roles, commercial work",
-      response: "Within hours",
       color: "primary"
     },
     {
@@ -100,7 +98,6 @@ export const Contact = () => {
       title: "Location",
       value: "Los Angeles, CA",
       description: "Available for: Local & remote projects",
-      response: "Flexible",
       color: "accent"
     }
   ];
@@ -183,24 +180,19 @@ export const Contact = () => {
           <p className="text-lg text-white/80 font-body max-w-2xl mx-auto mb-2">
             Ready to collaborate? Multiple ways to connect for different professional needs
           </p>
-          <p className="text-sm text-white/60 font-body">
-            Fast response times • Professional service • Global availability
-          </p>
         </div>
 
         {/* COMPACT STATS ROW */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           {[
-            { value: "<24hr", label: "Response Time", icon: Clock, color: "text-green-400" },
             { value: "Global", label: "Availability", icon: Globe, color: "text-blue-400" },
-            { value: "100%", label: "Professional", icon: CheckCircle, color: "text-yellow-400" },
             { value: "Multi", label: "Platforms", icon: MessageCircle, color: "text-accent-400" }
           ].map((stat) => (
             <div 
               key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3 group hover:scale-105 transition-all duration-300"
+              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
             >
-              <stat.icon className={`w-5 h-5 ${stat.color} group-hover:animate-pulse`} />
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
               <div className="text-center">
                 <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
                 <div className="text-white/60 text-xs">{stat.label}</div>
@@ -228,11 +220,12 @@ export const Contact = () => {
                     <method.icon className={`w-4 h-4 ${method.color === 'primary' ? 'text-primary-400' : 'text-accent-400'}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-1">
-                      <h4 className="font-heading text-sm font-bold text-white">{method.title}</h4>
-                      <span className="text-xs text-green-400">{method.response}</span>
-                    </div>
-                    <p className="text-accent-400 text-sm font-semibold mb-1 truncate">{method.value}</p>
+                    <h4 className="font-heading text-sm font-bold text-white mb-1">{method.title}</h4>
+                    {method.href ? (
+                      <a href={method.href} className="block text-accent-400 text-sm font-semibold mb-1 truncate hover:underline">{method.value}</a>
+                    ) : (
+                      <p className="text-accent-400 text-sm font-semibold mb-1 truncate">{method.value}</p>
+                    )}
                     <p className="text-white/60 text-xs leading-relaxed mb-2">{method.description}</p>
                   </div>
                 </div>
@@ -381,13 +374,6 @@ export const Contact = () => {
                     <Send className="w-4 h-4 mr-2" />
                     {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
-                  <Button
-                    type="button"
-                    className="px-6 py-3 rounded-xl glass text-white hover:bg-white/10 transition-all"
-                  >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Schedule Call
-                  </Button>
                 </div>
               </form>
               
@@ -407,61 +393,25 @@ export const Contact = () => {
         </div>
       </section>
 
-      {/* QUICK CONTACT & INFO */}
+      {/* QUICK CONTACT */}
       <section className="pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          
-          {/* URGENT CONTACT */}
-          <Card className="glass rounded-2xl p-6 border-l-4 border-accent-400">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-full bg-gradient-to-r from-accent-500 to-primary-500">
-                <Clock className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-holographic">Urgent Inquiries</h3>
+        <Card className="glass rounded-2xl p-6 border-l-4 border-accent-400 max-w-2xl mx-auto">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-full bg-gradient-to-r from-accent-500 to-primary-500">
+              <Phone className="w-5 h-5 text-white" />
             </div>
-            <p className="text-white/80 leading-relaxed mb-4">
-              For time-sensitive bookings, casting calls, or immediate assistance, use these priority channels.
-            </p>
-            <div className="space-y-3">
-              <Button className="w-full px-4 py-3 rounded-xl bg-accent-500 text-white hover:bg-accent-600 transition-all">
-                <Phone className="w-4 h-4 mr-2" />
-                Call (213) 944-6059
-              </Button>
-              <Button className="w-full px-4 py-3 rounded-xl glass text-white hover:bg-white/10 transition-all">
-                <Building className="w-4 h-4 mr-2" />
-                Contact Agent
-              </Button>
-            </div>
-          </Card>
-
-          {/* RESPONSE EXPECTATIONS */}
-          <Card className="glass rounded-2xl p-6 border-l-4 border-primary-400">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500">
-                <MessageCircle className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="font-heading text-xl font-bold text-holographic">Response Times</h3>
-            </div>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center justify-between">
-                <span className="text-white/80">Email inquiries:</span>
-                <span className="text-green-400 font-medium">24-48 hours</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white/80">Phone calls:</span>
-                <span className="text-green-400 font-medium">Same day</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white/80">Urgent bookings:</span>
-                <span className="text-green-400 font-medium">Within hours</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-white/80">General availability:</span>
-                <span className="text-blue-400 font-medium">7 days/week</span>
-              </div>
-            </div>
-          </Card>
-        </div>
+            <h3 className="font-heading text-xl font-bold text-holographic">Urgent Inquiries</h3>
+          </div>
+          <p className="text-white/80 leading-relaxed mb-4">
+            For time-sensitive bookings or casting calls, call directly.
+          </p>
+          <Button className="w-full px-4 py-3 rounded-xl bg-accent-500 text-white hover:bg-accent-600 transition-all" asChild>
+            <a href="tel:+12139446059">
+              <Phone className="w-4 h-4 mr-2" />
+              Call (213) 944-6059
+            </a>
+          </Button>
+        </Card>
       </section>
     </ModernLayout>
   );

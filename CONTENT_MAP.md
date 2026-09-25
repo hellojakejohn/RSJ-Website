@@ -57,7 +57,7 @@ This document contains all text content, images, links, and data from the Stevie
 - **Subtitle**: "Professional acting portfolio and credits"
 
 ### Actor Bio
-- "20+ years of stage and screen experience"
+- "30+ years of stage and screen experience"
 - "100+ Film/Theatre/Television Credits"
 - "Member of SAG-AFTRA and Actors' Equity"
 
@@ -100,7 +100,7 @@ This document contains all text content, images, links, and data from the Stevie
 - **Cover Image**: `/Speech_101_Bookcover.png`
 - **Price**: $49.99
 - **Description**: "Essential public speaking techniques"
-- **Long Description**: "Comprehensive guide to conquering public speaking anxiety. Packed with exercises, real-world examples, and Stevie's proven techniques from 20+ years of teaching."
+- **Long Description**: "Comprehensive guide to conquering public speaking anxiety. Packed with exercises, real-world examples, and Stevie's proven techniques from 30+ years of teaching."
 - **Amazon URL**: `https://www.amazon.com/How-Survive-Speech-101-Workbook/dp/1500874523`
 - **Publish Date**: August 2014
 - **Pages**: 192

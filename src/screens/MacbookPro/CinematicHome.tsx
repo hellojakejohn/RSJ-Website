@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
-import { Card } from "../../components/ui/card";
-import { ChevronLeft, ChevronRight, Play, ExternalLink, Instagram, Youtube, Star, Award, Film } from "lucide-react";
+import { YouTubeEmbed } from "../../components/YouTubeEmbed";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { ChevronLeft, ChevronRight, Play, Instagram, Youtube, Star, Award, Film } from "lucide-react";
 import { SiTiktok, SiImdb } from "react-icons/si";
 
 export const CinematicHome = () => {
+  usePageMeta({
+    description: "Stevie Johnson is an actor, author, professor, and director with 30+ years of stage and screen experience. Reels, credits, books, and courses.",
+  });
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -23,10 +27,10 @@ export const CinematicHome = () => {
   ];
 
   const galleryImages = [
-    { id: 1, src: "/stevie_headshot_008.jpg", alt: "Professional Headshot 1", title: "Studio Portrait" },
-    { id: 2, src: "/stevie_headshot_207.jpg", alt: "Professional Headshot 2", title: "Character Study" },
-    { id: 3, src: "/stevie_headshot_287.jpg", alt: "Professional Headshot 3", title: "Dramatic Portrait" },
-    { id: 4, src: "/stevie_lovepotion.jpg", alt: "Character Portrait", title: "On Set" },
+    { id: 1, src: "/stevie_headshot_008.webp", alt: "Professional Headshot 1", title: "Studio Portrait" },
+    { id: 2, src: "/stevie_headshot_207.webp", alt: "Professional Headshot 2", title: "Character Study" },
+    { id: 3, src: "/stevie_headshot_287.webp", alt: "Professional Headshot 3", title: "Dramatic Portrait" },
+    { id: 4, src: "/stevie_lovepotion.webp", alt: "Character Portrait", title: "On Set" },
   ];
 
   const socialLinks = [
@@ -179,7 +183,7 @@ export const CinematicHome = () => {
               {[
                 { value: "30+", label: "Years Experience", icon: Award },
                 { value: "100+", label: "Film/Theatre/TV Credits", icon: Film },
-                { value: "4", label: "Books Published", icon: Star }
+                { value: "2", label: "Books Published", icon: Star }
               ].map((stat, index) => (
                 <div 
                   key={stat.label}
@@ -195,7 +199,7 @@ export const CinematicHome = () => {
             {/* PREMIUM CALL TO ACTION */}
             <div className="flex flex-col sm:flex-row items-start gap-6">
               <Button 
-                className="group px-10 py-5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold text-lg hover:scale-105 transition-all duration-500 holographic-border screen-glow"
+                className="group px-10 py-5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold text-lg hover:scale-105 transition-all duration-500"
                 asChild
               >
                 <a href="/actor">
@@ -213,7 +217,7 @@ export const CinematicHome = () => {
               {socialLinks.map((social, index) => (
                 <Button
                   key={social.label}
-                  className={`w-14 h-14 rounded-full bg-gradient-to-r ${social.color} p-0 hover:scale-125 transition-all duration-500 hover-glow screen-glow`}
+                  className={`w-14 h-14 rounded-full bg-gradient-to-r ${social.color} p-0 hover:scale-110 transition-transform duration-300`}
                   aria-label={social.label}
                   asChild
                 >
@@ -246,30 +250,26 @@ export const CinematicHome = () => {
                 </div>
                 <div className="flex gap-2">
                   <Button
-                    className="w-10 h-10 rounded-full cinematic-theater hover-glow"
+                    className="w-10 h-10 rounded-full cinematic-theater"
                     onClick={() => setActiveVideoIndex((prev) => prev === 0 ? videoReels.length - 1 : prev - 1)}
+                    aria-label="Previous reel"
                   >
                     <ChevronLeft className="w-5 h-5 text-white" />
                   </Button>
                   <Button
-                    className="w-10 h-10 rounded-full cinematic-theater hover-glow"
+                    className="w-10 h-10 rounded-full cinematic-theater"
                     onClick={() => setActiveVideoIndex((prev) => (prev + 1) % videoReels.length)}
+                    aria-label="Next reel"
                   >
                     <ChevronRight className="w-5 h-5 text-white" />
                   </Button>
                 </div>
               </div>
 
-              <div className="aspect-video rounded-2xl overflow-hidden screen-glow mb-6 group">
-                <iframe
-                  className="w-full h-full transition-transform duration-500 group-hover:scale-105"
-                  src={`https://www.youtube.com/embed/${videoReels[activeVideoIndex].id}`}
-                  title="Video Player"
-                  width="560"
-                  height="315"
-                  frameBorder="0"
-                  allowFullScreen
-                  loading="lazy"
+              <div className="aspect-video rounded-2xl overflow-hidden screen-glow mb-6">
+                <YouTubeEmbed
+                  id={videoReels[activeVideoIndex].id}
+                  title={videoReels[activeVideoIndex].title}
                 />
               </div>
 
@@ -278,12 +278,13 @@ export const CinematicHome = () => {
                 {videoReels.map((_, index) => (
                   <button
                     key={index}
-                    className={`h-3 rounded-full transition-all duration-500 hover:scale-125 ${
+                    className={`h-3 rounded-full transition-all duration-500 ${
                       index === activeVideoIndex
-                        ? 'w-12 bg-gradient-to-r from-accent-400 to-primary-400 screen-glow'
+                        ? 'w-12 bg-gradient-to-r from-accent-400 to-primary-400'
                         : 'w-3 bg-white/30 hover:bg-white/50'
                     }`}
                     onClick={() => setActiveVideoIndex(index)}
+                    aria-label={`Show reel ${index + 1}`}
                   />
                 ))}
               </div>
@@ -319,6 +320,7 @@ export const CinematicHome = () => {
                         : 'w-2 bg-white/30 hover:bg-white/50'
                     }`}
                     onClick={() => setActiveGalleryIndex(index)}
+                    aria-label={`Show photo ${index + 1}`}
                   />
                 ))}
               </div>
@@ -326,25 +328,6 @@ export const CinematicHome = () => {
           </div>
         </div>
 
-        {/* STATIC FLOATING ELEMENTS - NO ANIMATION */}
-        <div 
-          className="absolute top-1/4 left-1/4 w-6 h-6 bg-accent-400 rounded-full opacity-30"
-          style={{ 
-            transform: mousePos.x > 0 ? `translate(${mouseParallaxX * 2}px, ${mouseParallaxY * 2}px)` : 'translate(0, 0)'
-          }}
-        />
-        <div 
-          className="absolute top-1/3 right-1/3 w-5 h-5 bg-primary-400 rounded-full opacity-40"
-          style={{ 
-            transform: mousePos.x > 0 ? `translate(${-mouseParallaxX}px, ${-mouseParallaxY}px)` : 'translate(0, 0)'
-          }}
-        />
-        <div 
-          className="absolute bottom-1/4 left-1/3 w-4 h-4 bg-accent-500 rounded-full opacity-50"
-          style={{ 
-            transform: mousePos.x > 0 ? `translate(${mouseParallaxX}px, ${mouseParallaxY}px)` : 'translate(0, 0)'
-          }}
-        />
       </section>
 
     </ModernLayout>

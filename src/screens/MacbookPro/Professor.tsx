@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Card } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
-import { GraduationCap, BookOpen, Star, Award, Users, ChevronRight, ExternalLink, Quote, Heart, TrendingUp, Zap } from "lucide-react";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { GraduationCap, BookOpen, Award, Users, ChevronRight, Zap } from "lucide-react";
 
 export const Professor = () => {
+  usePageMeta({
+    title: "Professor",
+    description: "Stevie Johnson, Assistant Professor of Theatre Practice at the USC School of Dramatic Arts, with 30+ years of teaching.",
+  });
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
 
   const professorData = {
@@ -14,39 +19,35 @@ export const Professor = () => {
         title: "Introduction to Theatre",
         description: "Foundational course exploring theatre history, dramatic literature, and performance techniques.",
         credits: 4,
-        level: "Beginner",
-        grade: "A/A+"
+        level: "Beginner"
       },
       {
         code: "THTR 152", 
         title: "Acting Fundamentals",
         description: "Basic acting techniques including scene study, character development, and stage presence.",
         credits: 3,
-        level: "Beginner",
-        grade: "A/A+"
+        level: "Beginner"
       },
       {
         code: "THTR 252B",
         title: "Advanced Acting Workshop",
         description: "Intensive workshop focusing on advanced performance techniques and professional skills.",
         credits: 3,
-        level: "Intermediate",
-        grade: "A"
+        level: "Intermediate"
       },
       {
         code: "COMM 401",
         title: "Advanced Public Speaking",
         description: "Masterclass in professional presentation skills and audience engagement techniques.",
         credits: 3,
-        level: "Advanced",
-        grade: "A"
+        level: "Advanced"
       }
     ],
     education: [
       { degree: "MFA", institution: "USC School of Dramatic Arts", year: "1995" },
       { degree: "BA (Triple Major)", institution: "Theatre, Speech & Rhetoric", year: "1993" },
       { degree: "IBP Certification", institution: "Integrative Body Psychotherapy", year: "2010" },
-      { degree: "10+ Years Teaching", institution: "USC School of Dramatic Arts", year: "2017-Present" }
+      { degree: "30+ Years Teaching", institution: "USC School of Dramatic Arts", year: "2017-Present" }
     ],
     rateMyProfessors: {
       rating: 4.8,
@@ -89,7 +90,7 @@ export const Professor = () => {
             Assistant Professor of Theatre Practice • USC School of Dramatic Arts
           </p>
           <p className="text-sm text-white/60 font-body">
-            MFA USC '95 • 10+ Years Teaching Excellence
+            MFA USC '95 • 30+ Years Teaching Excellence
           </p>
         </div>
 
@@ -98,14 +99,14 @@ export const Professor = () => {
           {[
             { value: "MFA", label: "USC '95", icon: GraduationCap, color: "text-accent-400" },
             { value: "BA", label: "Theatre Arts", icon: BookOpen, color: "text-blue-400" },
-            { value: "10+", label: "Years Teaching", icon: Users, color: "text-green-400" },
+            { value: "30+", label: "Years Teaching", icon: Users, color: "text-green-400" },
             { value: "IBP", label: "Certified", icon: Award, color: "text-yellow-400" }
           ].map((stat) => (
             <div 
               key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3 group hover:scale-105 transition-all duration-300"
+              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
             >
-              <stat.icon className={`w-5 h-5 ${stat.color} group-hover:animate-pulse`} />
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
               <div className="text-center">
                 <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
                 <div className="text-white/60 text-xs">{stat.label}</div>
@@ -122,29 +123,16 @@ export const Professor = () => {
           
           {/* LEFT SECTION - ENHANCED COURSE GRID - Now full width since right section is commented */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="font-heading text-3xl font-bold text-holographic">Course Catalog</h2>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-green-400" />
-                <span className="px-3 py-1 rounded-full bg-green-500/20 text-green-400 text-sm">High Ratings</span>
-              </div>
-            </div>
+            <h2 className="font-heading text-3xl font-bold text-holographic">Course Catalog</h2>
 
             {/* CREATIVE 2x2 COURSE GRID - OPTIMIZED SPACING */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {professorData.courses.map((course, index) => (
                 <Card 
                   key={course.code}
-                  className="glass rounded-2xl p-4 hover-lift group cursor-pointer transition-all duration-500 hover:scale-105 relative overflow-hidden"
+                  className="glass rounded-2xl p-4 hover-lift group cursor-pointer transition-all duration-500 relative overflow-hidden"
                   onClick={() => setSelectedCourse(selectedCourse === index ? null : index)}
                 >
-                  {/* Course Level Indicator */}
-                  <div className={`absolute top-0 right-0 w-16 h-16 -mr-4 -mt-4 rotate-45 ${
-                    course.level === 'Beginner' ? 'bg-green-500/20' :
-                    course.level === 'Intermediate' ? 'bg-yellow-500/20' :
-                    'bg-red-500/20'
-                  }`} />
-                  
                   <div className="relative z-10">
                     <div className="flex items-start justify-between mb-2">
                       <div>
@@ -160,10 +148,6 @@ export const Professor = () => {
                           <span className="text-white/50 text-xs">{course.credits} units</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-green-400 font-bold text-sm">{course.grade}</div>
-                        <div className="text-white/40 text-xs">Avg Grade</div>
-                      </div>
                     </div>
                     
                     <h3 className="font-heading text-base font-bold text-white group-hover:text-primary-400 transition-colors mb-2">
@@ -171,13 +155,7 @@ export const Professor = () => {
                     </h3>
                     <p className="text-white/60 text-sm leading-relaxed mb-3">{course.description}</p>
                     
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3 h-3 text-yellow-400 fill-current" />
-                        ))}
-                        <span className="text-yellow-400 text-xs ml-1">5.0</span>
-                      </div>
+                    <div className="flex items-center justify-end">
                       <ChevronRight className="w-4 h-4 text-white/30 group-hover:text-primary-400 group-hover:translate-x-1 transition-all" />
                     </div>
                   </div>
@@ -185,7 +163,7 @@ export const Professor = () => {
                   {/* Expanded Details */}
                   {selectedCourse === index && (
                     <div className="mt-3 pt-3 border-t border-white/10 animate-in slide-in-from-top-2 duration-300">
-                      <div className="grid grid-cols-2 gap-4 text-xs text-white/50 mb-3">
+                      <div className="grid grid-cols-2 gap-4 text-xs text-white/50">
                         <div>
                           <span className="font-medium">Format:</span>
                           <p>Interactive workshop</p>
@@ -195,9 +173,6 @@ export const Professor = () => {
                           <p>Participation matters</p>
                         </div>
                       </div>
-                      <Button className="w-full px-4 py-2 rounded-lg bg-primary-500/20 text-primary-400 hover:bg-primary-500 hover:text-white transition-all text-sm">
-                        View Syllabus
-                      </Button>
                     </div>
                   )}
                 </Card>
@@ -313,7 +288,7 @@ export const Professor = () => {
               </div>
               <div className="flex items-center gap-2 text-white/80">
                 <Users className="w-4 h-4 text-accent-400" />
-                <span>10+ Years Teaching Experience</span>
+                <span>30+ Years Teaching Experience</span>
               </div>
               <div className="flex items-center gap-2 text-white/80">
                 <BookOpen className="w-4 h-4 text-accent-400" />

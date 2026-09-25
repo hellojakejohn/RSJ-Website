@@ -87,7 +87,7 @@ VITE_ENABLE_ADMIN=false
 ### Required for Contact Form (NOT SET)
 ```
 RESEND_API_KEY=            # Needs to be set in Vercel
-RECIPIENT_EMAIL=            # Should be stevie@steviejohnson.com
+RECIPIENT_EMAIL=            # Should be steviejohnson101@gmail.com
 FROM_EMAIL=                 # Can use onboarding@resend.dev
 ```
 
@@ -297,7 +297,7 @@ The contact form will be fully functional after deployment.
 2. **Add these variables**:
    ```
    RESEND_API_KEY=re_xxxxxxxxxxxx
-   RECIPIENT_EMAIL=stevie@steviejohnson.com
+   RECIPIENT_EMAIL=steviejohnson101@gmail.com
    FROM_EMAIL=onboarding@resend.dev
    ```
 

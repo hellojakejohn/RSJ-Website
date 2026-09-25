@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Card } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
-import { BookOpen, Users, Clock, Award, Film, Sparkles, GraduationCap, DollarSign, Calendar, ChevronRight, Star, MapPin, Mail } from "lucide-react";
+import { usePageMeta } from "../../lib/usePageMeta";
+import { BookOpen, Users, Clock, Award, Film, Sparkles, GraduationCap, Calendar, MapPin, Mail } from "lucide-react";
 
 export const Courses = () => {
+  usePageMeta({
+    title: "Courses",
+    description: "Acting, speech, voice, and directing courses taught by Stevie Johnson at USC and online.",
+  });
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const courseCategories = [
@@ -25,10 +30,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: Sparkles,
-      color: "primary",
-      enrolled: 28,
-      maxStudents: 30,
-      rating: 4.7
+      color: "primary"
     },
     {
       code: "COMM 134",
@@ -40,10 +42,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: Users,
-      color: "accent",
-      enrolled: 24,
-      maxStudents: 25,
-      rating: 4.8
+      color: "accent"
     },
     {
       code: "THTR 270",
@@ -55,10 +54,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: Film,
-      color: "primary",
-      enrolled: 20,
-      maxStudents: 22,
-      rating: 4.9
+      color: "primary"
     },
     {
       code: "THTR 272",
@@ -70,10 +66,7 @@ export const Courses = () => {
       level: "Intermediate",
       duration: "16 weeks",
       icon: Film,
-      color: "accent",
-      enrolled: 18,
-      maxStudents: 20,
-      rating: 4.8
+      color: "accent"
     },
     {
       code: "THTR 100",
@@ -85,10 +78,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: BookOpen,
-      color: "primary",
-      enrolled: 25,
-      maxStudents: 30,
-      rating: 4.7
+      color: "primary"
     },
     {
       code: "THTR 570",
@@ -100,10 +90,7 @@ export const Courses = () => {
       level: "Advanced",
       duration: "10 weeks",
       icon: Film,
-      color: "accent",
-      enrolled: 12,
-      maxStudents: 15,
-      rating: 5.0
+      color: "accent"
     },
     {
       code: "THTR 101",
@@ -115,10 +102,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: Award,
-      color: "primary",
-      enrolled: 15,
-      maxStudents: 18,
-      rating: 4.8
+      color: "primary"
     },
     {
       code: "THTR 380",
@@ -130,10 +114,7 @@ export const Courses = () => {
       level: "Advanced",
       duration: "12 weeks",
       icon: Film,
-      color: "accent",
-      enrolled: 14,
-      maxStudents: 16,
-      rating: 4.9
+      color: "accent"
     },
     {
       code: "THTR 150",
@@ -145,10 +126,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "12 weeks",
       icon: Film,
-      color: "primary",
-      enrolled: 22,
-      maxStudents: 25,
-      rating: 4.7
+      color: "primary"
     },
     {
       code: "THTR 110",
@@ -160,10 +138,7 @@ export const Courses = () => {
       level: "Beginner",
       duration: "10 weeks",
       icon: Film,
-      color: "accent",
-      enrolled: 20,
-      maxStudents: 24,
-      rating: 4.8
+      color: "accent"
     },
     {
       code: "COMM 285",
@@ -175,10 +150,7 @@ export const Courses = () => {
       level: "Intermediate",
       duration: "12 weeks",
       icon: Sparkles,
-      color: "primary",
-      enrolled: 16,
-      maxStudents: 20,
-      rating: 4.9
+      color: "primary"
     }
   ];
 
@@ -206,15 +178,13 @@ export const Courses = () => {
         <div className="flex flex-wrap justify-center gap-4 mb-8">
           {[
             { value: "11", label: "Active Courses", icon: BookOpen, color: "text-blue-400" },
-            { value: "350+", label: "Students Taught", icon: Users, color: "text-green-400" },
-            { value: "20+", label: "Years Teaching", icon: Clock, color: "text-yellow-400" },
-            { value: "4.8★", label: "Avg Rating", icon: Star, color: "text-accent-400" }
+            { value: "30+", label: "Years Teaching", icon: Clock, color: "text-yellow-400" }
           ].map((stat) => (
             <div 
               key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3 group hover:scale-105 transition-all duration-300"
+              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
             >
-              <stat.icon className={`w-5 h-5 ${stat.color} group-hover:animate-pulse`} />
+              <stat.icon className={`w-5 h-5 ${stat.color}`} />
               <div className="text-center">
                 <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
                 <div className="text-white/60 text-xs">{stat.label}</div>
@@ -251,7 +221,7 @@ export const Courses = () => {
           {filteredCourses.map((course, index) => (
             <Card 
               key={course.code}
-              className="glass rounded-2xl p-4 hover-lift group transition-all duration-300 hover:scale-102"
+              className="glass rounded-2xl p-4 hover-lift group transition-all duration-300"
             >
               {/* Course Header */}
               <div className="flex items-start justify-between mb-3">
@@ -286,7 +256,7 @@ export const Courses = () => {
               </p>
               
               {/* Course Details */}
-              <div className="grid grid-cols-2 gap-3 mb-3 text-xs text-white/50">
+              <div className="grid grid-cols-2 gap-3 text-xs text-white/50">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-3 h-3" />
                   <span>{course.term}</span>
@@ -295,42 +265,6 @@ export const Courses = () => {
                   <GraduationCap className="w-3 h-3" />
                   <span>{course.credits} credits</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <Users className="w-3 h-3" />
-                  <span>{course.enrolled}/{course.maxStudents}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                  <span>{course.rating}</span>
-                </div>
-              </div>
-
-              {/* Enrollment Status */}
-              <div className="mb-3">
-                <div className="flex justify-between text-xs text-white/60 mb-1">
-                  <span>Enrollment</span>
-                  <span>{course.enrolled}/{course.maxStudents}</span>
-                </div>
-                <div className="w-full bg-white/10 rounded-full h-1.5">
-                  <div 
-                    className={`h-1.5 rounded-full ${
-                      (course.enrolled / course.maxStudents) > 0.8 ? 'bg-red-400' :
-                      (course.enrolled / course.maxStudents) > 0.6 ? 'bg-yellow-400' :
-                      'bg-green-400'
-                    }`}
-                    style={{ width: `${(course.enrolled / course.maxStudents) * 100}%` }}
-                  />
-                </div>
-              </div>
-              
-              {/* Actions */}
-              <div className="flex gap-2">
-                <Button className="flex-1 px-3 py-2 rounded-lg bg-primary-500/20 text-primary-400 hover:bg-primary-500 hover:text-white transition-all text-sm">
-                  View Details
-                </Button>
-                <Button className="px-3 py-2 rounded-lg bg-accent-500/20 text-accent-400 hover:bg-accent-500 hover:text-white transition-all">
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
               </div>
             </Card>
           ))}
@@ -354,13 +288,11 @@ export const Courses = () => {
               so secure your spot today.
             </p>
             <div className="space-y-3">
-              <Button className="w-full px-4 py-3 rounded-xl bg-primary-500 text-white hover:bg-primary-600 transition-all">
-                <Mail className="w-4 h-4 mr-2" />
-                Contact for Enrollment
-              </Button>
-              <Button className="w-full px-4 py-3 rounded-xl glass text-white hover:bg-white/10 transition-all">
-                <Calendar className="w-4 h-4 mr-2" />
-                Schedule Consultation
+              <Button className="w-full px-4 py-3 rounded-xl bg-primary-500 text-white hover:bg-primary-600 transition-all" asChild>
+                <a href="/contact">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Contact for Enrollment
+                </a>
               </Button>
             </div>
           </Card>
