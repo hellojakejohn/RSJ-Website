@@ -1,1 +1,0 @@
-export { MacbookPro } from "./MacbookPro";
