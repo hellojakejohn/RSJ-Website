@@ -3,6 +3,7 @@ import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
 import { usePageMeta } from "../../lib/usePageMeta";
+import { PageHeader } from "../../components/PageHeader";
 import { Calendar, BookOpen, ShoppingCart, Award, Mail } from "lucide-react";
 
 export const ModernAuthor = () => {
@@ -42,59 +43,35 @@ export const ModernAuthor = () => {
 
   return (
     <ModernLayout activeNavItem="author">
-      {/* COMPACT HEADER SECTION */}
-      <section className="py-12">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-4xl md:text-6xl font-black leading-none tracking-tight mb-4">
-            <span className="text-holographic">AUTHOR • STEVIE JOHNSON</span>
-          </h1>
-          <p className="text-lg text-white/80 font-body max-w-2xl mx-auto mb-2">
-            Published works exploring memoir, education, and creative arts
-          </p>
-          <p className="text-sm text-white/60 font-body">
-            2 new books in development for 2025
-          </p>
-        </div>
-
-        {/* COMPACT STATS ROW */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {[
-            { value: "2", label: "Books", icon: BookOpen },
-            { value: "2", label: "Genres", icon: Award },
-          ].map((stat) => (
-            <div 
-              key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
-            >
-              <stat.icon className="w-5 h-5 text-accent-400" />
-              <div className="text-center">
-                <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <PageHeader
+        title="AUTHOR • STEVIE JOHNSON"
+        subtitle={"Published works exploring memoir, education, and creative arts"}
+        note={"2 new books in development for 2025"}
+        stats={[
+          { value: "2", label: "Books", icon: BookOpen },
+          { value: "2", label: "Genres", icon: Award },
+        ]}
+      />
 
       {/* PUBLISHED WORKS - CENTERED LAYOUT */}
-      <section className="pb-16">
+      <section className="pb-8">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="font-display text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400 mb-4">
+          <div className="text-center mb-4">
+            <h2 className="font-display text-3xl lg:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">
               PUBLISHED WORKS
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 justify-center">
             {books.map((book, index) => (
               <Card 
                 key={book.title} 
-                className="glass rounded-3xl p-5 hover-lift group overflow-hidden relative max-w-md mx-auto"
+                className="glass rounded-3xl p-5 hover-lift group overflow-hidden relative w-full max-w-md mx-auto"
               >
                 {/* Book Cover with 3D Flip Effect */}
-                <div className="perspective-1000 mb-5">
+                <div className="perspective-1000 mb-4">
                   <div 
-                    className="relative w-full aspect-[2/3] transition-transform duration-700 preserve-3d cursor-pointer max-w-xs mx-auto"
+                    className="relative w-full aspect-[2/3] transition-transform duration-700 preserve-3d cursor-pointer max-w-[260px] md:max-w-[220px] mx-auto"
                     style={{
                       transform: selectedBook === index ? "rotateY(180deg)" : "rotateY(0deg)"
                     }}
@@ -135,7 +112,7 @@ export const ModernAuthor = () => {
                 </div>
 
                 {/* Book Info */}
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div className="flex items-center justify-center">
                     <span className={`px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${book.color} text-white`}>
                       {book.genre}
@@ -150,7 +127,7 @@ export const ModernAuthor = () => {
                     {book.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-4">
+                  <div className="flex items-center justify-between pt-2">
                     <div className="font-heading text-2xl font-bold text-accent-400">
                       ${book.price}
                     </div>
@@ -184,11 +161,11 @@ export const ModernAuthor = () => {
       </section>
 
       {/* ABOUT THE AUTHOR SECTION - PROMINENT BOTTOM */}
-      <section className="py-20">
-        <Card className="glass rounded-3xl p-12">
+      <section className="py-8">
+        <Card className="glass rounded-3xl p-6 lg:p-10">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="font-display text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400 mb-4">
+            <div className="text-center mb-8">
+              <h2 className="font-display text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400 mb-4">
                 About the Author
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-primary-400 to-accent-400 mx-auto rounded-full"></div>
@@ -228,7 +205,7 @@ export const ModernAuthor = () => {
 
               <div className="flex justify-center">
                 <div className="relative">
-                  <div className="w-80 h-80 rounded-2xl overflow-hidden neon-glow">
+                  <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden neon-glow">
                     <img
                       src="/stevie_headshot_287.webp"
                       alt="Stevie Johnson"

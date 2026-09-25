@@ -3,6 +3,7 @@ import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
 import { usePageMeta } from "../../lib/usePageMeta";
+import { PageHeader } from "../../components/PageHeader";
 import { 
   Mail, 
   Phone, 
@@ -171,36 +172,14 @@ export const Contact = () => {
 
   return (
     <ModernLayout activeNavItem="contact">
-      {/* COMPACT HEADER SECTION */}
-      <section className="py-12">
-        <div className="text-center mb-8">
-          <h1 className="font-display text-4xl md:text-6xl font-black leading-none tracking-tight mb-4">
-            <span className="text-holographic">CONTACT • STEVIE JOHNSON</span>
-          </h1>
-          <p className="text-lg text-white/80 font-body max-w-2xl mx-auto mb-2">
-            Ready to collaborate? Multiple ways to connect for different professional needs
-          </p>
-        </div>
-
-        {/* COMPACT STATS ROW */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {[
-            { value: "Global", label: "Availability", icon: Globe, color: "text-blue-400" },
-            { value: "Multi", label: "Platforms", icon: MessageCircle, color: "text-accent-400" }
-          ].map((stat) => (
-            <div 
-              key={stat.label}
-              className="cinematic-theater holographic-border rounded-xl px-6 py-3 flex items-center gap-3"
-            >
-              <stat.icon className={`w-5 h-5 ${stat.color}`} />
-              <div className="text-center">
-                <div className="font-heading text-xl font-bold text-holographic">{stat.value}</div>
-                <div className="text-white/60 text-xs">{stat.label}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <PageHeader
+        title="CONTACT • STEVIE JOHNSON"
+        subtitle={"Ready to collaborate? Multiple ways to connect for different professional needs"}
+        stats={[
+          { value: "Global", label: "Availability", icon: Globe, color: "text-blue-400" },
+          { value: "Multi", label: "Platforms", icon: MessageCircle, color: "text-accent-400" },
+        ]}
+      />
 
 
       {/* MAIN CONTACT LAYOUT */}
@@ -256,7 +235,7 @@ export const Contact = () => {
           </div>
 
           {/* CENTER: CONTACT FORM (2/3) */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-first lg:order-none">
             <Card className="glass rounded-2xl p-6">
               <div className="flex items-center gap-3 mb-6">
                 <div className="p-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500">

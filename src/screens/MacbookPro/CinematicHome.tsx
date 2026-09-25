@@ -123,7 +123,7 @@ export const CinematicHome = () => {
       {/* 🎭 CINEMATIC HERO SECTION */}
       <section 
         ref={heroRef}
-        className="relative min-h-screen overflow-hidden mb-24"
+        className="relative overflow-hidden mb-12 lg:mb-24"
         style={{
           transform: scrollY > 0 ? `translateY(${parallaxOffset}px)` : 'translateY(0)',
         }}
@@ -133,11 +133,11 @@ export const CinematicHome = () => {
         
         {/* ATMOSPHERIC PARTICLES DISABLED TO PREVENT JUMPINESS */}
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 min-h-screen items-center px-6 max-w-7xl mx-auto">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start pt-4 lg:pt-6 px-0 lg:px-6 max-w-7xl mx-auto">
           
           {/* 🎪 LEFT SIDE - ACTOR INTRODUCTION */}
           <div 
-            className="space-y-8 depth-layer-3"
+            className="space-y-6 depth-layer-3"
             style={{
               transform: `translate(${mouseParallaxX}px, ${mouseParallaxY}px)`
             }}
@@ -149,8 +149,8 @@ export const CinematicHome = () => {
               </h1>
               
               {/* ANIMATED ROLE DISPLAY */}
-              <div className="h-16 flex items-center relative overflow-hidden">
-                <div className="font-heading text-3xl md:text-4xl font-bold tracking-wide relative">
+              <div className="h-12 md:h-16 flex items-center relative overflow-hidden">
+                <div className="font-heading text-3xl md:text-4xl font-bold tracking-wide relative w-full h-full">
                   {roles.map((role, index) => (
                     <span
                       key={role}
@@ -179,7 +179,7 @@ export const CinematicHome = () => {
             </div>
 
             {/* CINEMATIC STATS */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-3 gap-3 lg:gap-4">
               {[
                 { value: "30+", label: "Years Experience", icon: Award },
                 { value: "100+", label: "Film/Theatre/TV Credits", icon: Film },
@@ -187,19 +187,21 @@ export const CinematicHome = () => {
               ].map((stat, index) => (
                 <div 
                   key={stat.label}
-                  className="holographic-border rounded-3xl p-6 text-center cinematic-theater"
+                  className="holographic-border rounded-2xl px-2 py-3 lg:px-4 flex items-center justify-center gap-3 cinematic-theater min-w-0"
                 >
-                  <stat.icon className="w-8 h-8 mx-auto mb-3 text-accent-400" />
-                  <div className="font-heading text-3xl font-bold text-holographic">{stat.value}</div>
-                  <div className="text-white/60 text-sm font-body">{stat.label}</div>
+                  <stat.icon className="hidden sm:block w-6 h-6 flex-shrink-0 text-accent-400" />
+                  <div className="text-center min-w-0">
+                    <div className="font-heading text-xl lg:text-2xl font-bold text-holographic leading-tight">{stat.value}</div>
+                    <div className="text-white/60 text-[11px] lg:text-xs font-body leading-snug">{stat.label}</div>
+                  </div>
                 </div>
               ))}
             </div>
 
             {/* PREMIUM CALL TO ACTION */}
-            <div className="flex flex-col sm:flex-row items-start gap-6">
+            <div className="flex flex-wrap items-center gap-3 lg:gap-4">
               <Button 
-                className="group px-10 py-5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold text-lg hover:scale-105 transition-all duration-500"
+                className="group px-8 py-5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 text-white font-heading font-semibold text-lg hover:scale-105 transition-all duration-500"
                 asChild
               >
                 <a href="/actor">
@@ -207,13 +209,13 @@ export const CinematicHome = () => {
                   Enter the Theater
                 </a>
               </Button>
-              <Button className="px-10 py-5 rounded-full glass-strong text-white font-heading font-medium text-lg hover-lift cinematic-theater" asChild>
+              <Button className="px-8 py-5 rounded-full glass-strong text-white font-heading font-medium text-lg hover-lift cinematic-theater" asChild>
                 <a href="/author">Literary Works</a>
               </Button>
             </div>
 
             {/* SOCIAL LINKS WITH GLOW EFFECTS */}
-            <div className="flex items-center gap-6 pt-4">
+            <div className="flex items-center gap-4 lg:gap-6">
               {socialLinks.map((social, index) => (
                 <Button
                   key={social.label}
