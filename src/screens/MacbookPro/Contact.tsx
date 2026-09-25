@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ModernLayout } from "../../components/layout/ModernLayout";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
@@ -32,8 +32,11 @@ export const Contact = () => {
     email: "",
     inquiryType: "general",
     subject: "",
-    message: ""
+    message: "",
+    company: "" // honeypot, real users never see or fill this
   });
+  // Spam timing check: when the form was first shown
+  const startedAt = useRef(Date.now());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{type: 'success' | 'error' | null, message: string}>({type: null, message: ''});
 
@@ -110,6 +113,10 @@ export const Contact = () => {
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    // Tab left open for hours: restart the clock so the server doesn't treat it as stale
+    if (Date.now() - startedAt.current > 90 * 60 * 1000) {
+      startedAt.current = Date.now();
+    }
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -128,7 +135,7 @@ export const Contact = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, startedAt: startedAt.current }),
       });
 
       const data = await response.json();
@@ -145,7 +152,8 @@ export const Contact = () => {
           email: '',
           inquiryType: 'general',
           subject: '',
-          message: ''
+          message: '',
+          company: ''
         });
       } else {
         setSubmitStatus({
@@ -265,6 +273,22 @@ export const Contact = () => {
               </div>
               
               <form className="space-y-4" onSubmit={handleSubmit}>
+                {/* Honeypot: hidden from people and screen readers, bots fill it in */}
+                <div
+                  aria-hidden="true"
+                  style={{ position: 'absolute', left: '-10000px', top: 'auto', width: '1px', height: '1px', overflow: 'hidden' }}
+                >
+                  <label htmlFor="company">Company</label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleInputChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-white mb-2">
